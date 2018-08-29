@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import Part from './part'
 
 class BookShelf extends Component {
+  state = {
+    partList:[
+      {partTitle: "Currently Reading", value: 'currentlyReading'},
+      {partTitle: "Want to Read", value: 'wantToRead'},
+      {partTitle: "Read", value: 'read'}        
+    ]
+  }
 	render() {
-    let currentlyReading 
-    let wantToRead
-    let read
-    currentlyReading = this.props.books.filter(book => book.shelf === "currentlyReading")
-    wantToRead = this.props.books.filter(book => book.shelf === "wantToRead")
-    read = this.props.books.filter(book => book.shelf === "read")
 		return (
 			<div className="list-books">
             <div className="list-books-title">
@@ -16,57 +18,11 @@ class BookShelf extends Component {
             </div>
             <div className="list-books-content">
               <div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {currentlyReading.map((book) => (
-                        <li key={book.id}>
-                          <div className="book">
-                            <div className="book-top">
-                              <div className="book-cover" style={{ width: 128, height:193, backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>   
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {wantToRead.map((book) => (
-                        <li key={book.id}>
-                          <div className="book">
-                            <div className="book-top">
-                              <div className="book-cover" style={{ width: 128, height:193, backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {read.map((book) => (
-                        <li key={book.id}>
-                          <div className="book">
-                            <div className="book-top">
-                              <div className="book-cover" style={{ width: 128, height:193, backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}>
-                              </div>
-                            </div>
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
-                  </div>
-                </div>
+              {this.state.partList.map((part) => <Part 
+                key={part.value}
+                partTitle={part.partTitle}
+                books={this.props.books.filter((book) => book.shelf === part.value)}
+              />)}
               </div>
             </div>
             <div className="open-search">

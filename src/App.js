@@ -5,7 +5,6 @@ import './App.css'
 import SearchPage from './SearchPage'
 import BookShelf from './BookShelf'
 
-
 class BooksApp extends React.Component {
   state = {
     books: []
@@ -15,6 +14,7 @@ class BooksApp extends React.Component {
     })
     BooksAPI.getAll().then((books) => {console.log(books)})
   }
+
   render() {
     return (
       <div className="app">
