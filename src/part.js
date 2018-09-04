@@ -12,7 +12,10 @@ class Part extends Component {
 	              	<Book
 	              		key={book.id}
 	              		id={book.id}
+	              		shelf={book.shelf}
 	              		img={book.imageLinks.smallThumbnail}
+	              		onHandleChange={this.props.onHandleChange}
+	              		book={book}
 	              	/>
 	              ))}
 	            </ol>
