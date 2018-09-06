@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import Book from './book'
+import PropTypes from 'prop-types'
 
 class Part extends Component {
+  	static propTypes = {
+    	books: PropTypes.array.isRequired
+  	}
 	render() {
 		return(
 			<div className="bookshelf">
@@ -13,7 +17,7 @@ class Part extends Component {
 	              		key={book.id}
 	              		id={book.id}
 	              		shelf={book.shelf}
-	              		img={book.imageLinks.smallThumbnail}
+	              		img={book.imageLinks ? book.imageLinks.smallThumbnail : this.props.defaultImg}
 	              		onHandleChange={this.props.onHandleChange}
 	              		book={book}
 	              	/>

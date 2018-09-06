@@ -23,6 +23,7 @@ class BookShelf extends Component {
                 partTitle={part.partTitle}
                 books={this.props.books.filter((book) => book.shelf === part.value)}
                 onHandleChange={this.props.onHandleChange}
+                defaultImg={this.props.defaultImg}
               />)}
               </div>
             </div>
