@@ -29,7 +29,7 @@ class BooksApp extends React.Component {
   }
 
   searchBooks = (query) => {
-    this.setState({ query: query.trim() })
+    this.setState({ query: query })
     BooksAPI.getAll().then((books) => this.setState( {books}))
     const shelfBooks = this.state.books 
     console.log(shelfBooks)
