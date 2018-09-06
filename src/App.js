@@ -17,7 +17,6 @@ class BooksApp extends React.Component {
   componentDidMount() {
     BooksAPI.getAll().then((books) => {this.setState({ books })
     })
-    BooksAPI.getAll().then((books) => {console.log(books)})
   }
 
   onUpdate(book, shelf) {
@@ -25,15 +24,13 @@ class BooksApp extends React.Component {
     .then(res => BooksAPI.getAll())
     .then((books) => {
       this.setState({ books })
-      console.log(books)})  
+    })  
   }
 
   searchBooks = (query) => {
     this.setState({ query: query })
     BooksAPI.getAll().then((books) => this.setState( {books}))
     const shelfBooks = this.state.books 
-    console.log(shelfBooks)
-    console.log('lllll')
     BooksAPI.search(query).then((searchedBooks) => {
       //when query is null set searchBooks array
       if (Array.isArray(searchedBooks)) {
@@ -54,7 +51,6 @@ class BooksApp extends React.Component {
         this.setState({ searchedBooks: []})
       }
     })    
-    BooksAPI.search(query).then((books) => {console.log(books)})
   }
 
   render() {
