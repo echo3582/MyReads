@@ -18,6 +18,9 @@ class BooksApp extends React.Component {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
     })
+    .catch(
+      () => alert('Oops, failed to get the book list')
+    )
   }
 
   componentDidMount() {
@@ -27,6 +30,9 @@ class BooksApp extends React.Component {
   onUpdate(book, shelf) {
     BooksAPI.update(book, shelf)
     .then(res => this.getBookList(res))
+    .catch(
+      () => alert('Oops, failed to change the shelf of this book')
+    )
   }
 
   //Keep the same state between searchPage and shelfPage
@@ -46,14 +52,17 @@ class BooksApp extends React.Component {
 
   searchBooks = (query) => {
     this.setState({ query: query })
-    this.getBookList();
+    // this.getBookList();
     BooksAPI.search(query).then((searchedBooks) => {
       if (Array.isArray(searchedBooks)) {
         this.keepSameState(searchedBooks)
       } else {
         this.setState({ searchedBooks: []})
       }
-    })    
+    })
+    .catch(
+      () => alert('Oops, something goes wrong ~~~')
+    )
   }
 
   render() {
