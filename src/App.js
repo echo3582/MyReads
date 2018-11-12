@@ -54,21 +54,22 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    const { books, defaultImg, query, searchedBooks } = this.state;
     return (
       <div className="app">
         <Route exact path="/" render={() => (
           <BookShelf
-            books={this.state.books}
-            defaultImg={this.state.defaultImg}
+            books={books}
+            defaultImg={defaultImg}
             onHandleChange={(book, shelf) => this.onUpdate(book, shelf)}
           />
         )}/>
         <Route exact path="/search" render={({ history }) => (
           <SearchPage
-            query={this.state.query}
+            query={query}
             onSearchBooks={(query) => this.searchBooks(query)}
-            defaultImg={this.state.defaultImg}
-            searchedBooks={this.state.searchedBooks}
+            defaultImg={defaultImg}
+            searchedBooks={searchedBooks}
             onHandleChange={(book, shelf) => {
               this.onUpdate(book, shelf) 
               history.push("/")
@@ -82,4 +83,3 @@ class BooksApp extends React.Component {
 }
 
 export default BooksApp
-

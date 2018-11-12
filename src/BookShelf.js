@@ -11,6 +11,8 @@ class BookShelf extends Component {
     ]
   }
 	render() {
+    const { partList } = this.state;
+    const { books, onHandleChange, defaultImg } = this.props;
 		return (
 			<div className="list-books">
             <div className="list-books-title">
@@ -18,12 +20,12 @@ class BookShelf extends Component {
             </div>
             <div className="list-books-content">
               <div>
-              {this.state.partList.map((part) => <Part 
+              {partList.map((part) => <Part 
                 key={part.value}
                 partTitle={part.partTitle}
-                books={this.props.books.filter((book) => book.shelf === part.value)}
-                onHandleChange={this.props.onHandleChange}
-                defaultImg={this.props.defaultImg}
+                books={books.filter((book) => book.shelf === part.value)}
+                onHandleChange={onHandleChange}
+                defaultImg={defaultImg}
               />)}
               </div>
             </div>
