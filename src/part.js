@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 const Part = (props) => {
 
-  	const { partTitle, books, defaultImg, onHandleChange } = props;
+  	const { partTitle, books, defaultImg, onHandleChange } = props
 
 		return(
 			<div className="bookshelf">

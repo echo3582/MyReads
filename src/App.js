@@ -10,43 +10,46 @@ class BooksApp extends React.Component {
     books: [],
     query: '',
     searchedBooks: [],
-    //when books have no background image , use this.
+    //when books have no background image , use defaultImg.
     defaultImg: "https://books.google.com/googlebooks/images/no_cover_thumb.gif"
   }
   
-  componentDidMount() {
-    BooksAPI.getAll().then((books) => {this.setState({ books })
+  getBookList() {
+    BooksAPI.getAll().then((books) => {
+      this.setState({ books })
     })
+  }
+
+  componentDidMount() {
+    this.getBookList()
   }
 
   onUpdate(book, shelf) {
     BooksAPI.update(book, shelf)
-    .then(res => BooksAPI.getAll())
-    .then((books) => {
-      this.setState({ books })
-    })  
+    .then(res => this.getBookList(res))
   }
 
-  searchBooks = (query) => {
-    this.setState({ query: query })
-    BooksAPI.getAll().then((books) => this.setState( {books}))
-    const shelfBooks = this.state.books 
-    BooksAPI.search(query).then((searchedBooks) => {
-      //when query is null set searchBooks array
-      if (Array.isArray(searchedBooks)) {
-      //the book's state is same on both the searchPage and the shelfPage
+  //Keep the same state between searchPage and shelfPage
+  keepSameState = (searchedBooks) => {
+      const shelfBooks = this.state.books 
       const newSearchedBooks = searchedBooks.map(searchedBook => {
           const serchedBookInShelf = shelfBooks.find(
             shelfBook => shelfBook.id === searchedBook.id
           );
-
           return {
             ...searchedBook,
             shelf: serchedBookInShelf ? serchedBookInShelf.shelf : "none"
           }
-
         })
-        this.setState({ searchedBooks: newSearchedBooks })
+        this.setState({ searchedBooks: newSearchedBooks })  
+  }
+
+  searchBooks = (query) => {
+    this.setState({ query: query })
+    this.getBookList();
+    BooksAPI.search(query).then((searchedBooks) => {
+      if (Array.isArray(searchedBooks)) {
+        this.keepSameState(searchedBooks)
       } else {
         this.setState({ searchedBooks: []})
       }
@@ -54,7 +57,7 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    const { books, defaultImg, query, searchedBooks } = this.state;
+    const { books, defaultImg, query, searchedBooks } = this.state
     return (
       <div className="app">
         <Route exact path="/" render={() => (

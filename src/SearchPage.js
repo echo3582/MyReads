@@ -4,7 +4,7 @@ import Book from './book'
 import PropTypes from 'prop-types'
 
 const SearchPage = (props) => {
-  const { query, searchedBooks, defaultImg, onHandleChange, onSearchBooks } = props;
+  const { query, searchedBooks, defaultImg, onHandleChange, onSearchBooks } = props
 
   const handleChange = (query) => {
     onSearchBooks(query)

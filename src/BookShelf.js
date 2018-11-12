@@ -11,8 +11,8 @@ class BookShelf extends Component {
     ]
   }
 	render() {
-    const { partList } = this.state;
-    const { books, onHandleChange, defaultImg } = this.props;
+    const { partList } = this.state
+    const { books, onHandleChange, defaultImg } = this.props
 		return (
 			<div className="list-books">
             <div className="list-books-title">
