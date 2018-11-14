@@ -4,6 +4,7 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import SearchPage from './SearchPage'
 import BookShelf from './BookShelf'
+import sortBy from 'sort-by'
 
 class BooksApp extends React.Component {
   state = {
@@ -15,9 +16,7 @@ class BooksApp extends React.Component {
   }
   
   getBookList() {
-    BooksAPI.getAll().then((books) => {
-      this.setState({ books })
-    })
+    BooksAPI.getAll().then(books => this.setState({ books }))
     .catch(
       () => alert('Oops, failed to get the book list')
     )
@@ -38,7 +37,7 @@ class BooksApp extends React.Component {
   //Keep the same state between searchPage and shelfPage
   keepSameState = (searchedBooks) => {
       const shelfBooks = this.state.books 
-      const newSearchedBooks = searchedBooks.map(searchedBook => {
+      let newSearchedBooks = searchedBooks.map(searchedBook => {
           const serchedBookInShelf = shelfBooks.find(
             shelfBook => shelfBook.id === searchedBook.id
           );
@@ -47,7 +46,8 @@ class BooksApp extends React.Component {
             shelf: serchedBookInShelf ? serchedBookInShelf.shelf : "none"
           }
         })
-        this.setState({ searchedBooks: newSearchedBooks })  
+      newSearchedBooks = newSearchedBooks.sort(sortBy('title'))
+      this.setState({ searchedBooks: newSearchedBooks })  
   }
 
   searchBooks = (query) => {

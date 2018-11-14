@@ -17,6 +17,8 @@ const Part = (props) => {
 	              		id={book.id}
 	              		shelf={book.shelf}
 	              		img={book.imageLinks ? book.imageLinks.smallThumbnail : defaultImg}
+	              		title={book.title}
+	              		author={book.authors[0]}
 	              		onHandleChange={onHandleChange}
 	              		book={book}
 	              	/>

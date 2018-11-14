@@ -8,7 +8,7 @@ class Book extends Component {
 		}
 	}
 	render () {
-		const { id, img, shelf, book, onHandleChange } = this.props
+		const { id, img, shelf, book, onHandleChange, title, author } = this.props
 		const handleChange = (event, book) => {
 			onHandleChange(book, event.target.value)
 			this.setState({loading: true})
@@ -34,6 +34,8 @@ class Book extends Component {
 			          </select>
 		          </div>
 		        </div>
+		        <div className="book-title">{title}</div>
+                <div className="book-authors">{author}</div>
 		      </div>
 		    </li>
 		)

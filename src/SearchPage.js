@@ -9,7 +9,7 @@ const SearchPage = (props) => {
   const handleChange = (query) => {
     onSearchBooks(query)
   }
-
+  
   return (
     <div className="search-books">
       <div className="search-books-bar">
@@ -34,6 +34,8 @@ const SearchPage = (props) => {
                 onHandleChange={onHandleChange}
                 book={book}
                 query={query}
+                title={book.title}
+                author={book.authors ? book.authors[0] : ""}
               />
             ))}
         </ol>
