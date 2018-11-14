@@ -1,34 +1,43 @@
-import React from 'react'
+import React, { Component } from 'react'
 
-const Book = (props) => {
-	const { id, img, shelf, book, onHandleChange } = props
-	const handleChange = (event, book) => {
-		onHandleChange(book, event.target.value)
+class Book extends Component {
+	constructor (props) {
+		super(props)
+		this.state = {
+			loading: false
+		}
 	}
-	const bookCoverStyle = {
+	render () {
+		const { id, img, shelf, book, onHandleChange } = this.props
+		const handleChange = (event, book) => {
+			onHandleChange(book, event.target.value)
+			this.setState({loading: true})
+		}
+		const bookCoverStyle = {
 			width: 128, 
 			height:193, 
 			backgroundImage: `url(${img})`
+		}
+		return(
+			<li key={id}>
+		      <div className="book">
+		        <div className="book-top">
+		          <div className="book-cover" style={bookCoverStyle}>
+		          </div>
+		          <div className={this.state.loading ? "loading book-shelf-changer" : "book-shelf-changer" }>
+			          <select value={shelf} onChange={(event) => handleChange(event, book)}>
+			          	<option value="move" disabled>Move to...</option>
+			            <option value="currentlyReading">Currently Reading</option>
+			            <option value="wantToRead">Want to Read</option>
+			            <option value="read">Read</option>
+			            <option value="none">None</option>
+			          </select>
+		          </div>
+		        </div>
+		      </div>
+		    </li>
+		)
 	}
-	return(
-		<li key={id}>
-	      <div className="book">
-	        <div className="book-top">
-	          <div className="book-cover" style={bookCoverStyle}>
-	          </div>
-	          <div className="book-shelf-changer">
-	          <select value={shelf} onChange={(event) => handleChange(event, book)}>                             
-	            <option value="move" disabled>Move to...</option>
-	            <option value="currentlyReading">Currently Reading</option>
-	            <option value="wantToRead">Want to Read</option>
-	            <option value="read">Read</option>
-	            <option value="none">None</option>
-	          </select>
-	        </div>
-	        </div>
-	      </div>
-	    </li>
-	)	
 }
 
 export default Book
