@@ -5,6 +5,8 @@ import './App.css'
 import SearchPage from './SearchPage'
 import BookShelf from './BookShelf'
 import sortBy from 'sort-by'
+import * as _ from 'lodash'
+
 
 class BooksApp extends React.Component {
   state = {
@@ -50,9 +52,8 @@ class BooksApp extends React.Component {
       this.setState({ searchedBooks: newSearchedBooks })  
   }
 
-  searchBooks = (query) => {
-    this.setState({ query: query })
-    // this.getBookList();
+  //防抖
+  searchBooks = _.debounce((query) => {
     BooksAPI.search(query).then((searchedBooks) => {
       if (Array.isArray(searchedBooks)) {
         this.keepSameState(searchedBooks)
@@ -63,7 +64,7 @@ class BooksApp extends React.Component {
     .catch(
       () => alert('Oops, something goes wrong ~~~')
     )
-  }
+  }, 1000)
 
   render() {
     const { books, defaultImg, query, searchedBooks } = this.state
