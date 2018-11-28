@@ -12,13 +12,8 @@ const Part = (props) => {
 	          <div className="bookshelf-books">
 	          	<ol className="books-grid">
 	              {books.map((book) => (
-	              	<Book
-	              		key={book.id}
-	              		id={book.id}
-	              		shelf={book.shelf}
-	              		img={book.imageLinks ? book.imageLinks.smallThumbnail : defaultImg}
-	              		title={book.title}
-	              		author={book.authors[0]}
+	              	<Book key={book.id}
+	              		defaultImg={defaultImg}
 	              		onHandleChange={onHandleChange}
 	              		book={book}
 	              	/>

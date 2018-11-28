@@ -4,19 +4,16 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import SearchPage from './SearchPage'
 import BookShelf from './BookShelf'
-import sortBy from 'sort-by'
-import * as _ from 'lodash'
 
-
-class BooksApp extends React.Component {
-  state = {
-    books: [],
-    query: '',
-    searchedBooks: [],
-    //when books have no background image , use defaultImg.
-    defaultImg: "https://books.google.com/googlebooks/images/no_cover_thumb.gif"
-  }
+class BooksApp extends React.Component { 
   
+  constructor (props) {   
+    super(props)
+    this.state = {
+      books: []
+    }
+  }
+
   getBookList() {
     BooksAPI.getAll().then(books => this.setState({ books }))
     .catch(
@@ -36,38 +33,10 @@ class BooksApp extends React.Component {
     )
   }
 
-  //Keep the same state between searchPage and shelfPage
-  keepSameState = (searchedBooks) => {
-      const shelfBooks = this.state.books 
-      let newSearchedBooks = searchedBooks.map(searchedBook => {
-          const serchedBookInShelf = shelfBooks.find(
-            shelfBook => shelfBook.id === searchedBook.id
-          );
-          return {
-            ...searchedBook,
-            shelf: serchedBookInShelf ? serchedBookInShelf.shelf : "none"
-          }
-        })
-      newSearchedBooks = newSearchedBooks.sort(sortBy('title'))
-      this.setState({ searchedBooks: newSearchedBooks })  
-  }
-
-  //防抖
-  searchBooks = _.debounce((query) => {
-    BooksAPI.search(query).then((searchedBooks) => {
-      if (Array.isArray(searchedBooks)) {
-        this.keepSameState(searchedBooks)
-      } else {
-        this.setState({ searchedBooks: []})
-      }
-    })
-    .catch(
-      () => alert('Oops, something goes wrong ~~~')
-    )
-  }, 1000)
-
   render() {
-    const { books, defaultImg, query, searchedBooks } = this.state
+    const { books } = this.state
+    //when books have no background image , use defaultImg.
+    const defaultImg = "https://books.google.com/googlebooks/images/no_cover_thumb.gif"
     return (
       <div className="app">
         <Route exact path="/" render={() => (
@@ -79,10 +48,8 @@ class BooksApp extends React.Component {
         )}/>
         <Route exact path="/search" render={({ history }) => (
           <SearchPage
-            query={query}
-            onSearchBooks={(query) => this.searchBooks(query)}
+            books={books}
             defaultImg={defaultImg}
-            searchedBooks={searchedBooks}
             onHandleChange={(book, shelf) => {
               this.onUpdate(book, shelf) 
               history.push("/")
