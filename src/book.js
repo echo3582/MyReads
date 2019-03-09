@@ -9,15 +9,17 @@ class Book extends Component {
 		}
 	}
 
+	handleChange (event, book) {
+		const { onHandleChange } = this.props
+		onHandleChange(book, event.target.value)
+		this.setState({loading: true})
+	}
+
 	render () {
-		const { book, onHandleChange, defaultImg } = this.props
-		const handleChange = (event, book) => {
-			onHandleChange(book, event.target.value)
-			this.setState({loading: true})
-		}
+		const { book, defaultImg } = this.props
 		const bookCoverStyle = {
-			width: 128, 
-			height:193, 
+			width: 128,
+			height:193,
 			backgroundImage: `url(${book.imageLinks ? book.imageLinks.smallThumbnail : defaultImg})`
 		}
 		const options = [
@@ -35,10 +37,10 @@ class Book extends Component {
 		          <div className="book-cover" style={bookCoverStyle}>
 		          </div>
 		          <div className={this.state.loading ? "loading book-shelf-changer" : "book-shelf-changer"}>
-			          <select value={book.shelf} onChange={(event) => handleChange(event, book)}>
-			          	{options.map((opt) => 
-			          		opt.value === "move" ? 
-			          		<option key={opt.value} value={opt.value} disabled>{opt.text}</option> 
+			          <select value={book.shelf} onChange={(event) => this.handleChange(event, book)}>
+			          	{options.map((opt) =>
+			          		opt.value === "move" ?
+			          		<option key={opt.value} value={opt.value} disabled>{opt.text}</option>
 			          		: <option key={opt.value} value={opt.value}>{opt.text}</option> )}
 			          </select>
 		          </div>

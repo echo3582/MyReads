@@ -6,22 +6,22 @@ const Part = (props) => {
 
   	const { partTitle, books, defaultImg, onHandleChange } = props
 
-		return(
-			<div className="bookshelf">
-	          <h2 className="bookshelf-title">{partTitle}</h2>
-	          <div className="bookshelf-books">
-	          	<ol className="books-grid">
-	              {books.map((book) => (
-	              	<Book key={book.id}
-	              		defaultImg={defaultImg}
-	              		onHandleChange={onHandleChange}
-	              		book={book}
-	              	/>
-	              ))}
-	            </ol>
-	          </div>
-	        </div>
-		) 
+	return(
+		<div className="bookshelf">
+          <h2 className="bookshelf-title">{partTitle}</h2>
+          <div className="bookshelf-books">
+          	<ol className="books-grid">
+              {books.map((book) => (
+              	<Book key={book.id}
+              		defaultImg={defaultImg}
+              		onHandleChange={onHandleChange}
+              		book={book}
+              	/>
+              ))}
+            </ol>
+          </div>
+        </div>
+	) 
 }
 
 Part.propTypes = {
